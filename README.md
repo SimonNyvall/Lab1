@@ -1,6 +1,6 @@
 # Lab1
 
-This exercise will tack a input of type string and return multipole. It will start at index zero and find the next index in the string which have the same number as the starting index.
+This exercise will take a input of type string and return multipole. It will start at index zero and find the next index in the string which have the same number as the starting index.
 
 If the string contains a non-number the string wont be added into the list.
 
