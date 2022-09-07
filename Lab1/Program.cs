@@ -1,65 +1,34 @@
 ﻿
 string input = "29535123p48723487597645723645";
 
-var output = new List<(string outputString, int startingIndex, int endingIndex)>();
+var outputs = new List<(int startIndex, int endIndex)>();
 
-ulong sum = 0;
+ulong sumOfOutput = 0;
+
 
 for (int i = 0; i < input.Length; i++)
 {
-    string numberString = findNumber(input, i);
+    string outputString = FindSequence(input, i);
 
-    if (isNumberVaild(numberString) && numberString != "")
+    if (IsStringNumber(outputString))
     {
-        sum += ulong.Parse(numberString);
-        output.Add((outputString: numberString, startingIndex: i, endingIndex: i + numberString.Length));
+        sumOfOutput += ulong.Parse(outputString);
+        outputs.Add((startIndex: i, endIndex: i + outputString.Length));
     }
 
 }
 
-for (int i = 0; i < output.Count; i++)
+PrintOutput();
+
+
+string FindSequence(string input, int startIndex)
 {
-    for (int j = 0; j < input.Length; j++)
+    string returnString = String.Empty;
+    string numberOfStartIndex = input[startIndex].ToString();
+
+    for (int i = startIndex; i < input.Length - 1; i++)
     {
-        if (j >= output[i].startingIndex && j < output[i].endingIndex)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write(input[j]);
-            Console.ForegroundColor = ConsoleColor.White;
-        }
-        else
-        {
-            Console.Write(input[j]);
-        }
-    }
-    Console.WriteLine();
-}
-Console.WriteLine($"\n {sum}");
-
-bool isNumberVaild(string subStringOfInput)
-{
-
-    for (int i = 0; i < subStringOfInput.Length; i++)
-    {
-        bool prestateRetuen = int.TryParse(subStringOfInput[i].ToString(), out int b);
-
-        if (prestateRetuen == false)
-        {
-            return false;
-        }
-    }
-
-    return true;
-
-}
-
-string findNumber(string input, int start)
-{
-    string returnString = "";
-    string compare = input[start].ToString();
-    for (int i = start; i < input.Length - 1; i++)
-    {
-        if (compare != input[i + 1].ToString())
+        if (numberOfStartIndex != input[i + 1].ToString())
         {
             returnString += input[i].ToString();
         }
@@ -70,13 +39,56 @@ string findNumber(string input, int start)
             break;
         }
     }
-    if (returnString != "")
+
+    if (returnString != String.Empty)
     {
-        if (returnString[0] != returnString[returnString.Length - 1] || 1 == returnString.Length)
+        if (returnString[0] != returnString[returnString.Length - 1] || returnString.Length == 1)
         {
-            return "";
+            return String.Empty;
         }
     }
 
     return returnString;
+}
+
+
+bool IsStringNumber(string outputString)
+{
+    if (outputString == String.Empty)
+    {
+        return false;
+    }
+
+    for (int i = 0; i < outputString.Length; i++)
+    {        
+        if (!(int.TryParse(outputString[i].ToString(), out int number)))
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+void PrintOutput()
+{
+    for (int i = 0; i < outputs.Count; i++)
+    {
+        for (int j = 0; j < input.Length; j++)
+        {
+            if (j >= outputs[i].startIndex && j < outputs[i].endIndex)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write(input[j]);
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                Console.Write(input[j]);
+            }
+        }
+        Console.WriteLine();
+    }
+    Console.WriteLine($"\nThe sum is: {sumOfOutput}");
 }
