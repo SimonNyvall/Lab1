@@ -55,11 +55,11 @@ string ReturnSubstringWithSameBeginingAndEndNumber(string input, int startIndex)
 }
 
 
-bool DoesStringOnlyContainNumbers(string outputString)
+bool DoesStringOnlyContainNumbers(string outputSubstring)
 {
-    if (string.IsNullOrEmpty(outputString)) return false;
+    if (string.IsNullOrEmpty(outputSubstring)) return false;
 
-    foreach (var charecter in outputString)
+    foreach (var charecter in outputSubstring)
     {
         if (!(int.TryParse(charecter.ToString(), out int number))) return false;
     }
