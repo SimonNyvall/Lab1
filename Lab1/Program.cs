@@ -1,94 +1,93 @@
-﻿
-string input = "29535123p48723487597645723645";
+﻿{
+    const string input = "29535123p48723487597645723645";
+    if (string.IsNullOrEmpty(input)) return;
 
-var outputs = new List<(int startIndex, int endIndex)>();
+    var startAndEndIndexOfSubStrings = new List<(int startIndex, int endIndex)>();
 
-ulong sumOfOutput = 0;
+    ulong sumOfSubstrings = 0;
 
+    string outputSubstring;
 
-for (int i = 0; i < input.Length; i++)
-{
-    string outputString = FindSequence(input, i);
-
-    if (IsStringNumber(outputString))
+    for (int currentIndexOfInput = 0; currentIndexOfInput < input.Length; currentIndexOfInput++)
     {
-        sumOfOutput += ulong.Parse(outputString);
-        outputs.Add((startIndex: i, endIndex: i + outputString.Length));
+        outputSubstring = ReturnSubstringWithSameBeginingAndEndNumber(input, currentIndexOfInput);
+
+        if (DoesStringOnlyContainNumbers(outputSubstring))
+        {
+            sumOfSubstrings += ulong.Parse(outputSubstring);
+            startAndEndIndexOfSubStrings.Add((startIndex: currentIndexOfInput, endIndex: currentIndexOfInput + outputSubstring.Length));
+        }
     }
 
+    WriteAmoutOfSulutionsWithColor(startAndEndIndexOfSubStrings, input);
+
+    Console.WriteLine($"\nThe sum is: {sumOfSubstrings}");
 }
 
-PrintOutput();
-
-
-string FindSequence(string input, int startIndex)
+string ReturnSubstringWithSameBeginingAndEndNumber(string input, int startIndex)
 {
-    string returnString = String.Empty;
+    string substringOfInput = String.Empty;
     string numberOfStartIndex = input[startIndex].ToString();
 
-    for (int i = startIndex; i < input.Length - 1; i++)
+    for (int currentIndex = startIndex; currentIndex < input.Length - 1; currentIndex++)
     {
-        if (numberOfStartIndex != input[i + 1].ToString())
+        if (numberOfStartIndex != input[currentIndex + 1].ToString())
         {
-            returnString += input[i].ToString();
+            substringOfInput += input[currentIndex].ToString();
         }
         else
-        {
-            returnString += input[i];
-            returnString += input[i + 1];
+        {            
+            substringOfInput += input[currentIndex];
+            substringOfInput += input[currentIndex + 1];
             break;
         }
     }
 
-    if (returnString != String.Empty)
+    if (!string.IsNullOrEmpty(substringOfInput))
     {
-        if (returnString[0] != returnString[returnString.Length - 1] || returnString.Length == 1)
-        {
+        if (substringOfInput.Length == 1) 
             return String.Empty;
-        }
+        if (substringOfInput[0] != substringOfInput[substringOfInput.Length - 1])     
+            return String.Empty;
     }
 
-    return returnString;
+    return substringOfInput;
 }
 
 
-bool IsStringNumber(string outputString)
+bool DoesStringOnlyContainNumbers(string outputString)
 {
-    if (outputString == String.Empty)
-    {
-        return false;
-    }
+    if (string.IsNullOrEmpty(outputString)) return false;
 
-    for (int i = 0; i < outputString.Length; i++)
-    {        
-        if (!(int.TryParse(outputString[i].ToString(), out int number)))
-        {
-            return false;
-        }
+    foreach (var charecter in outputString)
+    {
+        if (!(int.TryParse(charecter.ToString(), out int number))) return false;
     }
 
     return true;
 }
 
 
-void PrintOutput()
+void WriteAmoutOfSulutionsWithColor(List<(int startIndex, int endIndex)> startAndEndIndexOfSubStrings, string input)
 {
-    for (int i = 0; i < outputs.Count; i++)
+    for (int indexOfList = 0; indexOfList < startAndEndIndexOfSubStrings.Count; indexOfList++)
     {
-        for (int j = 0; j < input.Length; j++)
+        for (int indexOfInput = 0; indexOfInput < input.Length; indexOfInput++)
         {
-            if (j >= outputs[i].startIndex && j < outputs[i].endIndex)
+            if (indexOfInput >= startAndEndIndexOfSubStrings[indexOfList].startIndex &&
+                indexOfInput < startAndEndIndexOfSubStrings[indexOfList].endIndex)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write(input[j]);
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(input[indexOfInput]);
             }
             else
             {
-                Console.Write(input[j]);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(input[indexOfInput]);
             }
         }
         Console.WriteLine();
     }
-    Console.WriteLine($"\nThe sum is: {sumOfOutput}");
+
+    Console.ForegroundColor = ConsoleColor.White;
 }
