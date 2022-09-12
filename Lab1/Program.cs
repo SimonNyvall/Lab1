@@ -2,13 +2,13 @@
 using System;
 using System.Text;
 
-namespace ImprovedLab
+namespace Lab1
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            const string input = "29535123p48723487597645723645";            
+            const string input = "29535123p48723487597645723645";      
             if (string.IsNullOrEmpty(input)) return;
             
             ulong substringSum = 0;
