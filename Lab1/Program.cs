@@ -1,93 +1,58 @@
-﻿{
-    const string input = "29535123p48723487597645723645";
-    if (string.IsNullOrEmpty(input)) return;
+﻿using System.Runtime.InteropServices;
+using System;
+using System.Text;
 
-    var startAndEndIndexOfSubStrings = new List<(int startIndex, int endIndex)>();
-
-    ulong sumOfSubstrings = 0;
-
-    string outputSubstring;
-
-    for (int currentIndexOfInput = 0; currentIndexOfInput < input.Length; currentIndexOfInput++)
-    {
-        outputSubstring = ReturnSubstringWithSameBeginingAndEndNumber(input, currentIndexOfInput);
-
-        if (DoesStringOnlyContainNumbers(outputSubstring))
-        {
-            sumOfSubstrings += ulong.Parse(outputSubstring);
-            startAndEndIndexOfSubStrings.Add((startIndex: currentIndexOfInput, endIndex: currentIndexOfInput + outputSubstring.Length));
-        }
-    }
-
-    WriteAmoutOfSulutionsWithColor(startAndEndIndexOfSubStrings, input);
-
-    Console.WriteLine($"\nThe sum is: {sumOfSubstrings}");
-}
-
-string ReturnSubstringWithSameBeginingAndEndNumber(string input, int startIndex)
+namespace ImprovedLab
 {
-    string substringOfInput = String.Empty;
-    string numberOfStartIndex = input[startIndex].ToString();
-
-    for (int currentIndex = startIndex; currentIndex < input.Length - 1; currentIndex++)
+    internal class Program
     {
-        if (numberOfStartIndex != input[currentIndex + 1].ToString())
+        static void Main(string[] args)
         {
-            substringOfInput += input[currentIndex].ToString();
-        }
-        else
-        {            
-            substringOfInput += input[currentIndex];
-            substringOfInput += input[currentIndex + 1];
-            break;
-        }
-    }
+            const string input = "29535123p48723487597645723645";            
+            if (string.IsNullOrEmpty(input)) return;
+            
+            ulong substringSum = 0;
 
-    if (!string.IsNullOrEmpty(substringOfInput))
-    {
-        if (substringOfInput.Length == 1) 
-            return String.Empty;
-        if (substringOfInput[0] != substringOfInput[substringOfInput.Length - 1])     
-            return String.Empty;
-    }
-
-    return substringOfInput;
-}
-
-
-bool DoesStringOnlyContainNumbers(string outputSubstring)
-{
-    if (string.IsNullOrEmpty(outputSubstring)) return false;
-
-    foreach (var charecter in outputSubstring)
-    {
-        if (!(int.TryParse(charecter.ToString(), out int number))) return false;
-    }
-
-    return true;
-}
-
-
-void WriteAmoutOfSulutionsWithColor(List<(int startIndex, int endIndex)> startAndEndIndexOfSubStrings, string input)
-{
-    for (int indexOfList = 0; indexOfList < startAndEndIndexOfSubStrings.Count; indexOfList++)
-    {
-        for (int indexOfInput = 0; indexOfInput < input.Length; indexOfInput++)
-        {
-            if (indexOfInput >= startAndEndIndexOfSubStrings[indexOfList].startIndex &&
-                indexOfInput < startAndEndIndexOfSubStrings[indexOfList].endIndex)
+            for (int startIndex = 0; startIndex < input.Length; startIndex++)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write(input[indexOfInput]);
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.Write(input[indexOfInput]);
-            }
-        }
-        Console.WriteLine();
-    }
+                var endIndex = GetNextIndexForMachingNumber(input, startIndex);
+                if (endIndex > 0)
+                {
+                    string outputSubstring = GetSubstringFromStartToEndIndex(input, startIndex, endIndex);
 
-    Console.ForegroundColor = ConsoleColor.White;
+                    if (DoesStringOnlyContainNumbers(outputSubstring))
+                    {
+                        substringSum += ulong.Parse(outputSubstring);
+
+                        PrintColoredSubstring(input, startIndex, outputSubstring.Length);
+                    }
+                }
+            }
+            Console.WriteLine($"\nThe sum is: {substringSum}");
+        }
+        static int GetNextIndexForMachingNumber(string input, int startIndex)
+        {
+            return input.IndexOf(input[startIndex], startIndex + 1);
+        }
+
+        static string GetSubstringFromStartToEndIndex(string input, int start, int end)
+        {
+            return input.Substring(start, end - start + 1);
+        }
+
+        static bool DoesStringOnlyContainNumbers(string outputSubstring)
+        {
+            if (outputSubstring.All(c => char.IsDigit(c))) return true;
+            return false;        
+        }
+
+        static void PrintColoredSubstring(string input, int start, int length)
+        {           
+            Console.Write(input.Substring(0, start));
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(input.Substring(start, length));
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(input.Substring(start + length));
+        }
+    }
 }
