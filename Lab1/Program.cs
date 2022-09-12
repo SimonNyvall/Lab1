@@ -15,7 +15,7 @@ namespace ImprovedLab
 
             for (int startIndex = 0; startIndex < input.Length; startIndex++)
             {
-                var endIndex = GetNextIndexForMachingNumber(input, startIndex);
+                int endIndex = GetNextIndexForMachingNumber(input, startIndex);
                 if (endIndex > 0)
                 {
                     string outputSubstring = GetSubstringFromStartToEndIndex(input, startIndex, endIndex);
