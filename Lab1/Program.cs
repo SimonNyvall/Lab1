@@ -42,8 +42,7 @@ namespace Lab1
 
         static bool DoesStringOnlyContainNumbers(string outputSubstring)
         {
-            if (outputSubstring.All(c => char.IsDigit(c))) return true;
-            return false;        
+            return outputSubstring.All(c => char.IsDigit(c));          
         }
 
         static void PrintColoredSubstring(string input, int start, int length)
