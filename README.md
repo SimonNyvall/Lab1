@@ -16,4 +16,4 @@ const string input = "29535123p48723487597645723645";
 The sum is: 5836428677242
 ```
 ## Unit Test
-In the folder ... is a xUnit project that test all the functions in ... . the xUnit project test if the functions return the expected values, and terminate if a null or empty parameters are passed in.
+In the folder FindNumberSequences.Tests is a xUnit project that test all the functions in FindNumberSequences.cs. the xUnit project test if the functions return the expected values, and terminate if a null or empty parameters are passed in.
