@@ -12,7 +12,7 @@ namespace FindNumberSequences.Tests
 
             int expected = 6;
 
-            int actual = Lab.GetNextIndexForMachingNumber(input, startIndex);
+            int actual = Lab.GetNextIndexForMachingDigit(input, startIndex);
 
             Assert.Equal(expected, actual);
         }
@@ -24,7 +24,7 @@ namespace FindNumberSequences.Tests
 
             int expected = 1;
 
-            int actual = Lab.GetNextIndexForMachingNumber(input, startIndex);
+            int actual = Lab.GetNextIndexForMachingDigit(input, startIndex);
 
             Assert.Equal(expected, actual);
         }
@@ -36,7 +36,7 @@ namespace FindNumberSequences.Tests
 
             int expected = -1;
 
-            int actual = Lab.GetNextIndexForMachingNumber(input, startIndex);
+            int actual = Lab.GetNextIndexForMachingDigit(input, startIndex);
 
             Assert.Equal(expected, actual);
         }
@@ -48,7 +48,7 @@ namespace FindNumberSequences.Tests
 
             int expected = -1;
 
-            int actual = Lab.GetNextIndexForMachingNumber(input, startIndex);
+            int actual = Lab.GetNextIndexForMachingDigit(input, startIndex);
 
             Assert.Equal(expected, actual);
         }

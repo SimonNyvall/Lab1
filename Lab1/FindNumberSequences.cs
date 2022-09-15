@@ -16,7 +16,7 @@ namespace FindNumberSequences
 
             for (int startIndex = 0; startIndex < input.Length; startIndex++)
             {
-                int endIndex = GetNextIndexForMachingNumber(input, startIndex);
+                int endIndex = GetNextIndexForMachingDigit(input, startIndex);
                 if (endIndex > 0)
                 {
                     string outputSubstring = GetSubstringFromStartToEndIndex(input, startIndex, endIndex);
@@ -31,7 +31,7 @@ namespace FindNumberSequences
             }
             Console.WriteLine($"\nThe sum is: {substringSum}");
         }
-        public static int GetNextIndexForMachingNumber(string input, int startIndex)
+        public static int GetNextIndexForMachingDigit(string input, int startIndex)
         {
             if (string.IsNullOrEmpty(input)) return -1;
             if (startIndex < 0 || startIndex > input.Length) return -1;
