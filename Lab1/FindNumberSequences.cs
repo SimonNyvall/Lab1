@@ -42,7 +42,7 @@ namespace FindNumberSequences
         public static string GetSubstringFromStartToEndIndex(string input, int start, int end)
         {
             if (string.IsNullOrEmpty(input)) throw new ArgumentException("Empty or null", "input");
-            if (start < 0 || end > input.Length) throw new ArgumentException("Indeces was outside the length of input");
+            if (start < 0 || end >= input.Length) throw new ArgumentException("Indeces was outside the length of input");
             
             return input.Substring(start, end - start + 1);
         }
